@@ -61,6 +61,7 @@ typedef enum _RESwitchLabel {
 @property (assign, readwrite, nonatomic) CGSize textShadowOffset UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIFont *font UI_APPEARANCE_SELECTOR;
 @property (nonatomic, getter=isOn) BOOL on;
+@property (nonatomic) BOOL backgroundImageIsStatic;
 
 - (CGFloat)cornerRadius;
 - (void)setCornerRadius:(CGFloat)radius UI_APPEARANCE_SELECTOR;
