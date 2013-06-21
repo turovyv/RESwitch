@@ -105,11 +105,11 @@
     
     _onImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 3, 20, 10)];
     _onImageView.contentMode = UIViewContentModeCenter;
-    [_backgroundView addSubview:_onImageView];
+    [self addSubview:_onImageView];
     
     _offImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 3, 20, 10)];
-    _offImageView.contentMode = UIViewContentModeCenter;    
-    [_backgroundView addSubview:_offImageView];
+    _offImageView.contentMode = UIViewContentModeCenter;
+    [self addSubview:_offImageView];
     
     _staticBackgroundImageView = [[UIImageView alloc] initWithFrame:self.bounds];
     [self insertSubview:_staticBackgroundImageView atIndex:0];        
@@ -163,6 +163,17 @@
     
     [_onLabel sizeToFit];
     [_offLabel sizeToFit];
+    
+    frame = CGRectZero;
+    frame.size = _onImageView.image.size;
+    _onImageView.frame = frame;
+    _onImageView.center = CGPointMake(self.bounds.size.width / 4, self.bounds.size.height / 2);
+    _onImageView.frame = CGRectIntegral(_onImageView.frame);
+    
+    frame.size = _offImageView.image.size;
+    _offImageView.frame = frame;
+    _offImageView.center = CGPointMake(self.bounds.size.width / 4, self.bounds.size.height / 2);
+    _offImageView.frame = CGRectIntegral(_offImageView.frame);
 }
 
 - (CGFloat)offPosition
