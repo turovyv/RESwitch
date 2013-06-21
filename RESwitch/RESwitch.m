@@ -160,7 +160,7 @@
 
 - (BOOL)isOn
 {
-    return _isOn;
+    return _backgroundView.frame.origin.x == 0;
 }
 
 - (void)setOn:(BOOL)on animated:(BOOL)animated
@@ -169,7 +169,7 @@
         _isOn = on;
         [UIView animateWithDuration:0.25 animations:^{
             CGRect frame = _backgroundView.frame;
-            frame.origin.x = on || self.backgroundImageIsStatic ? 0 : self.offPosition;
+            frame.origin.x = on ? 0 : self.offPosition;
             _backgroundView.frame = frame;
             
             CGRect knobFrame = _knobView.frame;
@@ -317,10 +317,8 @@
         
         if (frame.origin.x > -self.frame.size.width / 2) {
             frame.origin.x = 0;
-            _isOn = YES;
         } else {
-            frame.origin.x = self.backgroundImageIsStatic ? 0 : self.offPosition;
-            _isOn = NO;
+            frame.origin.x = self.offPosition;
         }
         
         [UIView animateWithDuration:0.1 animations:^{
@@ -343,11 +341,9 @@
         CGRect frame = _backgroundView.frame;
 
         if (frame.origin.x == 0) {
-            frame.origin.x = self.backgroundImageIsStatic ? 0 : self.offPosition;
-            _isOn = YES;
+            frame.origin.x = self.offPosition;
         } else {
             frame.origin.x = 0;
-            _isOn = NO;            
         }
         [UIView animateWithDuration:0.15 animations:^{
             _backgroundView.frame = frame;
