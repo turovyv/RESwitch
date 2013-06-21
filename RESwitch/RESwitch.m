@@ -326,7 +326,7 @@
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         _knobView.image = _knobImage;
         
-        if (frame.origin.x > -self.frame.size.width / 2) {
+        if (frame.origin.x > -self.frame.size.width / 2 + _knobView.frame.size.width / 2) {
             frame.origin.x = 0;
             _isOn = YES;
         } else {
