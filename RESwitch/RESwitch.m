@@ -117,6 +117,7 @@
     frame.origin.x = _isOn ? 0 : self.offPosition;
     _backgroundView.frame = frame;
 
+    _staticBackgroundImageView.highlighted = _isOn;
     _backgroundImageView.image = _backgroundImage;
     _overlayImageView.image = _overlayImage;
     _knobView.image = _knobImage;
@@ -342,8 +343,8 @@
             _knobView.frame = knobFrame;
         }];
         
-        [UIView transitionWithView:self
-                          duration:0.1f
+        [UIView transitionWithView:_staticBackgroundImageView
+                          duration:0.1
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             _staticBackgroundImageView.highlighted = self.isOn;
@@ -375,8 +376,8 @@
             _knobView.frame = knobFrame;
         }];
         
-        [UIView transitionWithView:self
-                          duration:0.1f
+        [UIView transitionWithView:_staticBackgroundImageView
+                          duration:0.15
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             _staticBackgroundImageView.highlighted = _isOn;
