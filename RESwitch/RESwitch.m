@@ -328,8 +328,10 @@
         
         if (frame.origin.x > -self.frame.size.width / 2) {
             frame.origin.x = 0;
+            _isOn = YES;
         } else {
             frame.origin.x = self.offPosition;
+            _isOn = NO;
         }
         
         [UIView animateWithDuration:0.1 animations:^{
@@ -360,8 +362,10 @@
 
         if (frame.origin.x == 0) {
             frame.origin.x = self.offPosition;
+            _isOn = NO;
         } else {
             frame.origin.x = 0;
+            _isOn = YES;
         }
         [UIView animateWithDuration:0.15 animations:^{
             _backgroundView.frame = frame;
@@ -375,7 +379,7 @@
                           duration:0.1f
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-                            _staticBackgroundImageView.highlighted = self.isOn;
+                            _staticBackgroundImageView.highlighted = _isOn;
                         } completion:nil];
         
         [self sendActionsForControlEvents:UIControlEventValueChanged];
