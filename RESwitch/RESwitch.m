@@ -105,11 +105,11 @@
     
     _onImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 3, 20, 10)];
     _onImageView.contentMode = UIViewContentModeCenter;
-    [self addSubview:_onImageView];
+    [self insertSubview:_onImageView belowSubview:_knobView];
     
     _offImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 3, 20, 10)];
     _offImageView.contentMode = UIViewContentModeCenter;
-    [self addSubview:_offImageView];
+    [self insertSubview:_offImageView belowSubview:_knobView];
     
     _staticBackgroundImageView = [[UIImageView alloc] initWithFrame:self.bounds];
     [self insertSubview:_staticBackgroundImageView atIndex:0];        
