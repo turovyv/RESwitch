@@ -35,6 +35,7 @@ typedef enum _RESwitchLabel {
     UIView *_containerView;
     UIView *_backgroundView;
     UIImageView *_backgroundImageView;
+    UIImageView *_staticBackgroundImageView;
     UIImageView *_overlayImageView;
     UIImageView *_knobView;
     UILabel *_onLabel;
@@ -68,6 +69,7 @@ typedef enum _RESwitchLabel {
 - (void)setTextColor:(UIColor *)color forLabel:(RESwitchLabel)label UI_APPEARANCE_SELECTOR;
 - (void)setTextShadowColor:(UIColor *)color forLabel:(RESwitchLabel)label UI_APPEARANCE_SELECTOR;
 - (void)setTitle:(NSString *)title forLabel:(RESwitchLabel)label UI_APPEARANCE_SELECTOR;
+- (void)setStaticBackgroundImage:(UIImage *)image forOnState:(BOOL)on;
 
 - (void)setOn:(BOOL)on;
 - (void)setOn:(BOOL)on animated:(BOOL)animated; // does not send action

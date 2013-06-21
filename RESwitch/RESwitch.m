@@ -102,6 +102,9 @@
     _offLabel.text = NSLocalizedString(@"OFF", @"OFF");
     _offLabel.backgroundColor = [UIColor clearColor];
     [_backgroundView addSubview:_offLabel];
+    
+    _staticBackgroundImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    [self insertSubview:_staticBackgroundImageView atIndex:0];        
 }
 
 - (void)layoutSubviews
@@ -281,6 +284,14 @@
     [self setNeedsLayout];
 }
 
+- (void)setStaticBackgroundImage:(UIImage *)image forOnState:(BOOL)on {
+    if (on) {
+        _staticBackgroundImageView.highlightedImage = image;
+    } else {
+        _staticBackgroundImageView.image = image;
+    }
+}
+
 #pragma mark -
 #pragma mark Gesture recognizers
 
@@ -329,6 +340,13 @@
             _knobView.frame = knobFrame;
         }];
         
+        [UIView transitionWithView:self
+                          duration:0.1f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            _staticBackgroundImageView.highlighted = self.isOn;
+                        } completion:nil];
+        
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }
@@ -352,6 +370,13 @@
             knobFrame.origin.x = frame.origin.x + self.frame.size.width - knobFrame.size.width + _knobOffset.width;
             _knobView.frame = knobFrame;
         }];
+        
+        [UIView transitionWithView:self
+                          duration:0.1f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            _staticBackgroundImageView.highlighted = self.isOn;
+                        } completion:nil];
         
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
