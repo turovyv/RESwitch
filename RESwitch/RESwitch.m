@@ -103,6 +103,14 @@
     _offLabel.backgroundColor = [UIColor clearColor];
     [_backgroundView addSubview:_offLabel];
     
+    _onImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 3, 20, 10)];
+    _onImageView.contentMode = UIViewContentModeCenter;
+    [_backgroundView addSubview:_onImageView];
+    
+    _offImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 3, 20, 10)];
+    _offImageView.contentMode = UIViewContentModeCenter;    
+    [_backgroundView addSubview:_offImageView];
+    
     _staticBackgroundImageView = [[UIImageView alloc] initWithFrame:self.bounds];
     [self insertSubview:_staticBackgroundImageView atIndex:0];        
 }
@@ -290,6 +298,14 @@
         _staticBackgroundImageView.highlightedImage = image;
     } else {
         _staticBackgroundImageView.image = image;
+    }
+}
+
+- (void)setImage:(UIImage *)image forOnState:(BOOL)on {
+    if (on) {
+        _onImageView.image = image;
+    } else {
+        _offImageView.image = image;
     }
 }
 
