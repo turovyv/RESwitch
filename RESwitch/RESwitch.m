@@ -167,12 +167,14 @@
     frame = CGRectZero;
     frame.size = _onImageView.image.size;
     _onImageView.frame = frame;
-    _onImageView.center = CGPointMake(self.bounds.size.width / 4, self.bounds.size.height / 2);
+    _onImageView.center = CGPointMake((self.bounds.size.width - _knobView.frame.size.width) / 2,
+                                      self.bounds.size.height / 2);
     _onImageView.frame = CGRectIntegral(_onImageView.frame);
     
     frame.size = _offImageView.image.size;
     _offImageView.frame = frame;
-    _offImageView.center = CGPointMake(self.bounds.size.width / 4, self.bounds.size.height / 2);
+    _offImageView.center = CGPointMake((self.bounds.size.width - _knobView.frame.size.width) / 2 + _knobView.frame.size.width,
+                                       self.bounds.size.height / 2);
     _offImageView.frame = CGRectIntegral(_offImageView.frame);
 }
 
