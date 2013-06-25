@@ -185,13 +185,16 @@
 
 - (BOOL)isOn
 {
-    return _backgroundView.frame.origin.x == 0;
+    return _isOn;
+//    return _backgroundView.frame.origin.x == 0;
 }
 
 - (void)setOn:(BOOL)on animated:(BOOL)animated
 {
     if (animated) {
         _isOn = on;
+        [self animateTransitionToOnState:_isOn duration:0.25 completion:nil];
+        /*_isOn = on;
         [UIView animateWithDuration:0.25 animations:^{
             CGRect frame = _backgroundView.frame;
             frame.origin.x = on ? 0 : self.offPosition;
@@ -200,7 +203,7 @@
             CGRect knobFrame = _knobView.frame;
             knobFrame.origin.x = frame.origin.x + self.frame.size.width - knobFrame.size.width + _knobOffset.width;
             _knobView.frame = knobFrame;
-        }];
+        }];*/
     } else {
         [self setOn:on];
     }
@@ -210,6 +213,27 @@
 {
     _isOn = on;
     [self setNeedsLayout];
+}
+
+- (void)animateTransitionToOnState:(BOOL)on duration:(NSTimeInterval)duration completion:(void (^)(BOOL finished))completion {
+    CGRect frame = _backgroundView.frame;
+    
+    frame.origin.x = on ? 0 : self.offPosition;
+    
+    [UIView animateWithDuration:duration animations:^{
+        _backgroundView.frame = frame;
+        
+        CGRect knobFrame = _knobView.frame;
+        knobFrame.origin.x = frame.origin.x + self.frame.size.width - knobFrame.size.width + _knobOffset.width;
+        _knobView.frame = knobFrame;
+    }];
+    
+    [UIView transitionWithView:_staticBackgroundImageView
+                      duration:duration
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        _staticBackgroundImageView.highlighted = on;
+                    } completion:completion];
 }
 
 #pragma mark -
@@ -356,15 +380,21 @@
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         _knobView.image = _knobImage;
         
-        if (frame.origin.x > -self.frame.size.width / 2 + _knobView.frame.size.width / 2) {
+        /*if (frame.origin.x > -self.frame.size.width / 2 + _knobView.frame.size.width / 2) {
             frame.origin.x = 0;
             _isOn = YES;
         } else {
             frame.origin.x = self.offPosition;
             _isOn = NO;
-        }
+        }*/
         
-        [UIView animateWithDuration:0.1 animations:^{
+        _isOn = frame.origin.x > -self.frame.size.width / 2 + _knobView.frame.size.width / 2;
+        
+        [self animateTransitionToOnState:_isOn duration:0.1 completion:^(BOOL finished) {
+            [self sendActionsForControlEvents:UIControlEventValueChanged];
+        }];
+        
+        /*[UIView animateWithDuration:0.1 animations:^{
             _backgroundView.frame = frame;
             
             CGRect knobFrame = _knobView.frame;
@@ -377,9 +407,9 @@
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             _staticBackgroundImageView.highlighted = self.isOn;
-                        } completion:nil];
-        
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
+                        } completion:^(BOOL finished) {
+                            [self sendActionsForControlEvents:UIControlEventValueChanged];
+                        }];   */             
     }
 }
 
@@ -387,32 +417,14 @@
 {
     if (recognizer.state == UIGestureRecognizerStateEnded) {
         _knobView.image = _knobImage;
-
+        
         CGRect frame = _backgroundView.frame;
-
-        if (frame.origin.x == 0) {
-            frame.origin.x = self.offPosition;
-            _isOn = NO;
-        } else {
-            frame.origin.x = 0;
-            _isOn = YES;
-        }
-        [UIView animateWithDuration:0.15 animations:^{
-            _backgroundView.frame = frame;
-
-            CGRect knobFrame = _knobView.frame;
-            knobFrame.origin.x = frame.origin.x + self.frame.size.width - knobFrame.size.width + _knobOffset.width;
-            _knobView.frame = knobFrame;
+        
+        _isOn = frame.origin.x < 0;
+        
+        [self animateTransitionToOnState:_isOn duration:0.15 completion:^(BOOL finished) {
+            [self sendActionsForControlEvents:UIControlEventValueChanged];
         }];
-        
-        [UIView transitionWithView:_staticBackgroundImageView
-                          duration:0.15
-                           options:UIViewAnimationOptionTransitionCrossDissolve
-                        animations:^{
-                            _staticBackgroundImageView.highlighted = _isOn;
-                        } completion:nil];
-        
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }
 
